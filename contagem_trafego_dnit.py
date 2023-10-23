@@ -1,5 +1,5 @@
 # import requests
-# import pandas as pd
+import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -110,14 +110,35 @@ driver.implicitly_wait(5)
 
 elementHTML = element.get_attribute('outerHTML') #gives exact HTML content of the element
 elementSoup = BeautifulSoup(elementHTML,'html.parser')
-print(elementSoup)
+# print(elementSoup)
 print('----------------------')
-print(elementSoup.prettify())
+# print(elementSoup.prettify())
 print('----------------------')
-print(type(elementSoup))
+# print(type(elementSoup))
 
 with open('vmd2014.txt', 'w') as f:
     f.write(str(elementSoup))
+
+tableElement = elementSoup.find(id='TabVtd230202')
+# print(tableElement.prettify())
+
+with open('table2014.txt', 'w') as f:
+    f.write(str(tableElement))
+
+tableStr = str(tableElement)
+dfs = pd.read_html(tableStr, encoding='UTF-8')
+df = dfs[0].dropna(axis=0, thresh=4)
+df = df.rename(columns={'Unnamed: 0': 'Classe', 'Unnamed: 1': 'Descrição', 'Unnamed: 2': 'Sentido', 
+                        'Unnamed: 3': '1', 'Unnamed: 4': '2', 'Unnamed: 5': '3', 'Unnamed: 6': '4', 
+                        'Unnamed: 7': '5', 'Unnamed: 8': '6', 'Unnamed: 9': '7', 'Unnamed: 10': '8', 
+                        'Unnamed: 11': '9', 'Unnamed: 12': '10', 'Unnamed: 13': '11', 'Unnamed: 14': '12', 
+                        'Unnamed: 15': '13', 'Unnamed: 16': '14', 'Unnamed: 17': '15', 'Unnamed: 18': '16', 
+                        'Unnamed: 19': '17', 'Unnamed: 20': '18', 'Unnamed: 21': '19', 'Unnamed: 22': '20', 
+                        'Unnamed: 23': '21', 'Unnamed: 24': '22', 'Unnamed: 25': '23', 'Unnamed: 26': '24', 
+                        'Unnamed: 27': '25', 'Unnamed: 28': '26', 'Unnamed: 29': '27', 'Unnamed: 30': '28',
+                        'Unnamed: 31': '29', 'Unnamed: 32': '30', 'Unnamed: 33': '31', 'Unnamed: 34': 'Total'})
+
+df.to_csv('table2014.csv', sep=';', encoding='utf-8')
 
 ############################################
 ## 2015
