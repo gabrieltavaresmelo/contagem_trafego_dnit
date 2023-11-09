@@ -6,6 +6,11 @@ Este projeto realiza o scraping no site do DNIT, obtem os dados e estrutura no p
 
 ---
 
+## COLETA DOS DADOS
+
+[VÍDEO EXPLICATIVO](https://youtu.be/2LRK0XQHB2M)
+[LINK DE ACESSO AO VMD](https://servicos.dnit.gov.br/dadospnct/ContagemContinua)
+
 ## COMANDOS PARA CRIAR O AMBIENTE
 
 ```bash
